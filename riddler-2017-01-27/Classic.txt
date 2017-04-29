@@ -1,0 +1,19 @@
+
+Let f(n) be the probability of extinction starting with n organisms.
+
+f(1) = p*f(2)
+f(2) = p*f(4) + (1-p)*f(1)
+     = p*(f(4)-f(1)) + f(1)
+
+f(1) = p^2*f(4) + (p-p^2)*f(1)
+(1-p+-^2)*f(1) = p^2*f(4)
+
+f(1) = [p^2/(1-p+p^2)] f(4)
+     = [1 + (p-1)/(1-p+p^2)] f(4)
+
+f(3) = p*f(6) + (1-p)*f(2)
+     = p*f(6) + (1-p)/p * f(1)
+
+f(k) = p*f(2k) + (1-p)*f(k-1)
+f(k) = p*p*f(4k) + p(1-p)f(2k-1) + (1-p)*f(k-1)
+

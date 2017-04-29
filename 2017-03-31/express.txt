@@ -1,0 +1,27 @@
+The two events (person A and B arriving) form a sample space of a square of side-length 60.  The region in which the two meet is that bounded by the lines y = x +/- 15.  If we chop the region up into a 4x4 grid of side-length 15, we see that this region occupies 4 complete squares and 6 half-squares, so 7 out of 16 total squares.  Since they arrive independently at random the probability distribution is uniform, so that ratio of area to the total area represents the likelihood of meeting: 7/16.
+
+
+************####
+***********&####
+**********&&####
+*********&&&####
+********####&&&*
+*******&####&&**
+******&&####&***
+*****&&&####****
+****####&&&*****
+***&####&&******
+**&&####&*******
+*&&&####********
+####&&&*********
+####&&**********
+####&***********
+####************
+
+x < y && y < x + 15
+||
+y < x && x < y + 15
+<=>
+x < y < x -15 || y < x < y + 15
+<=>
+x + 15 < y + 15 < x || y < x < y + 15
