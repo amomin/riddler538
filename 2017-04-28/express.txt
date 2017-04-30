@@ -1,0 +1,36 @@
+Three logicians standing in a line, wearing hats selected from a set of
+3 identical white hats and 2 identical black hats.  They can only see the
+logicians standing in front of them (1<-2<-3).
+
+One person asks "Can anyone tell me what color hat you are wearing?".
+
+No one responds.
+
+Repeats: "Can anyone tell me what color hat you are wearing?".
+
+No one responds.
+
+A third time: "Can anyone tell me what color hat you are wearing?".
+
+One logician replies correctly.
+
+Who answers?  What color hat?  How do they know?
+
+#####
+
+The first logician will declare "I have a white hat".
+
+The only way to get a positive answer to the first questions is if they are wearing
+B<-B<-W
+in which case (3) can see the two black hats taken, and deduces the white hat
+she is wearing.
+
+When (3) does not answer, we also learn that if (1) is wearing a black
+hat, then (2) is wearing a white hat.
+
+When the question is asked a second time, we learn that (1) is not wearing
+a black hat: otherwise, (2) would have deduced that her hat is white and would
+answer.
+
+Therefore, when the question is asked a third time and an answer is given, we know
+it was (1) who responds that she is wearing a white hat.

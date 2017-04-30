@@ -1,0 +1,89 @@
+You play a game with four balls: One ball is red, one is blue, one is green and one
+is yellow. They are placed in a box. You draw a ball out of the box at random and
+note its color. Without replacing the first ball, you draw a second ball and then
+paint it to match the color of the first. Replace both balls, and repeat
+the process. The game ends when all four balls have become the same color. What
+is the expected number of turns to finish the game?
+
+Extra credit: What if there are more balls and more colors?
+
+### Answer
+
+Should take 9 turns to finish the game.
+
+By simulation (assuming starting with n balls of different colors):
+   (For n balls = 3:  4)
+    For n balls = 5: 16
+    For n balls = 6: 25
+    For n balls = 7: 36
+    For n balls = 8: 49
+    ...
+
+So.... for n balls, probably expect to take (n-1)^2 turns.
+
+Nice!  How to prove???  The analysis below for the n=4 case doesn't generalize
+well, since there will be p(n) states for n (partition number for n), and p(n)
+grows like exp(C*sqrt(n)).  Probably there is an easier analysis...
+
+### Work:
+
+We have the following states:
+
+(A) 4 distinct colors
+(B) 2 balls the same color, 1 ball another color, 1 ball yet another color
+(C) 2 balls the same color, 2 other another color (but the same as each other)
+(D) 3 balls the same color, 1 ball another color.
+(E) 4 balls the same color.
+
+We start in state (A), and immediately transition to state (B).
+
+State (B) can transition to either state (C) or (D), or remain in state (B).
+The probability of each transition is:
+
+B->B = 2/12  Must choose both balls of the same color, or first choose one ball
+      +4/12	 from the identical pair followed by another ball, in which case
+             we remain in state B but with a different color for the pair.
+B->C = 2/12  Must choose both of the balls of a different color).
+B->D = 4/12  Must first choose one of the different colored balls, then choose
+             one from the identical pair.
+
+State (C) can only transition as follows:
+C->C = 4/12  Pick both balls from the same pair.
+C->D = 8/12  Pick one ball from each pair.
+
+State (D) can transition as follows:
+D->C = 3/12  Pick the mismatched ball first.
+D->D = 6/12  Pick both balls from the identical triplet.
+D->E = 3/12  Pick the mismatched ball second.
+
+Let L(X) be the number of turns it takes to finish the game starting from state X.
+Abbreviate E(L(X)) as X.
+
+We have
+
+A = 1 + B
+B = (1+B)/2 + (1+C)/6 + (1+D)/3
+C = (1+C)/3 + 2*(1+D)/3
+D = (1+C)/4 + (1+D)/2 + 1/4
+(since E = 0).
+
+  B/2 = 1 + C/6 + D/3
+2*C/3 = 1 + 2*D/3
+  D/2 = 1 + C/4
+
+  3B = 6   + C + 2D
+   C = 3/2 + D
+  2D = 4   + C
+  
+=>
+  2D = 4 + 3/2 + D
+   D = 11/2
+=>
+   C = 14/2 = 7
+=>
+  3B = 6 + 7 + 11
+   B = 8
+=>
+   A = 1 + 8 = 9
+
+Therefore the expected number of turns is 9.
