@@ -23,7 +23,7 @@ So.... for n balls, probably expect to take (n-1)^2 turns.
 
 Nice!  How to prove???  The analysis below for the n=4 case doesn't generalize
 well, since there will be p(n) states for n (partition number for n), and p(n)
-grows like exp(C*sqrt(n)).  Probably there is an easier analysis...
+grows like exp(C*sqrt(n)).  Perhaps there is a better analysis...
 
 ### Work:
 
