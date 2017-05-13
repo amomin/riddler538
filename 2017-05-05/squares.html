@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Squares </title>
+<style>
+td {
+    width:20px;
+    height:20px;
+    background-color: gray;
+}
+.black { background-color: black; }
+.green { background-color: green; }
+.blue { background-color: blue; }
+.red { background-color: red; }
+.yellow { background-color: yellow; }
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body onload="load()">
+<table id='table'>
+<tbody id='table-body'>
+</tbody>
+</table>
+<ol id="squares">
+</ol>
+<script type="text/javascript">
+
+function Square(t, l, b, r, color) {
+    this.l = l;
+    this.r = r;
+    this.b = b;
+    this.t = t;
+    this.color = color;
+}
+
+function load() {
+    var colors = ['red', 'green', 'blue', 'yellow'];
+    var square_num = 0;
+    var squares = [];
+    var state = 0;
+    var selected = {};
+
+    function makeSquare(s1, s2, color) {
+        t = Math.min(s1.row, s2.row);
+        b = Math.max(s1.row, s2.row);
+        l = Math.min(s1.col, s2.col);
+        r = Math.max(s1.col, s2.col);
+        if ((b-t) != (r-l)) return false;
+        var s = new Square(t, l, b, r, color);
+        $('.cell').each(function(i, v) {
+            if ($(v).data('row') >= t && $(v).data('row') <= b &&
+                $(v).data('col') >= l && $(v).data('col') <= r) {
+                $(v).addClass(color);
+            }
+        });
+        square_num += 1;
+        squares.push(s);
+        updateSquares();
+        return true;
+    }
+
+    function updateSquares() {
+        var l = $('#squares');
+        l.html("");
+        squares.forEach(function(v, i) {
+            var row = $('<li/>');
+            row.data('square', i);
+            row.text("Square " + i + " X");
+            row.css('color', v.color);
+            row.click(function() {
+                deleteSquare(i);
+            });
+            l.append(row);
+        });
+    }
+
+    function deleteSquare(i) {
+        var s = squares[i];
+        var t = s.t; var b = s.b; var l = s.l; var r = s.r;
+        $('.cell').each(function(i, v) {
+            if ($(v).data('row') >= t && $(v).data('row') <= b &&
+                $(v).data('col') >= l && $(v).data('col') <= r) {
+                $(v).removeClass(s.color);
+            }
+        });
+        squares.splice(i, 1);
+        updateSquares();
+    }
+
+    var table = $('#table-body');
+    for (var i = 0; i < 13; i++) {
+        var row = $("<tr/>");
+        for (var j = 0; j < 13; j++) {
+            var cell = $("<td/>");
+            cell.data('row', i);
+            cell.data('col', j);
+            cell.addClass('cell');
+            row.append(cell);
+        }
+        table.append(row);
+    }
+
+    $('.cell').click(function(event) {
+        var r = $(this).data('row');
+        var c = $(this).data('col');
+        if (state == 0) {
+            selected = {'row' : r, 'col' : c};
+            state = 1;
+        }
+        else if (state == 1) {
+            if (makeSquare(selected,
+                {'row' : r, 'col' : c},
+                colors[square_num % colors.length])) {
+                selected = {};
+                state = 0;
+            }
+        }
+    });
+    $('.cell').mouseenter(function() {
+        if (state == 0) return;
+        var r = $(this).data('row');
+        var c = $(this).data('col');
+        t = Math.min(selected.row, r);
+        b = Math.max(selected.row, r);
+        l = Math.min(selected.col, c);
+        r = Math.max(selected.col, c);
+        $('.cell').each(function(i, v) {
+            if ($(v).data('row') >= t && $(v).data('row') <= b &&
+                $(v).data('col') >= l && $(v).data('col') <= r) {
+                $(v).addClass('black');
+            }
+        });
+    });
+    $('.cell').mouseleave(function() {
+        if (state == 0) return;
+        var r = $(this).data('row');
+        var c = $(this).data('col');
+        t = Math.min(selected.row, r);
+        b = Math.max(selected.row, r);
+        l = Math.min(selected.col, c);
+        r = Math.max(selected.col, c);
+        $('.cell').each(function(i, v) {
+            if ($(v).data('row') >= t && $(v).data('row') <= b &&
+                $(v).data('col') >= l && $(v).data('col') <= r) {
+                $(v).removeClass('black');
+            }
+        });
+    });
+}
+</script>
+</body>
+</html>
