@@ -1,0 +1,39 @@
+Birthday problem
+
+23 people, 3 pairs have the same birthday.  What are the odds of that?
+Same question with 14 people.
+
+Let's assume the 3 birthdays are distinct.  Then there are
+```
+n1 = (365-0)*(365-1)*(365-2)
+```
+ways to get their birthdays, and there are `m=(23C6)*(6C2)*(4C2)` ways to pick the
+pairs, or `(23C2)*(21C2)*(19C2)`.  Among the remaining 17 people, there are
+```
+n2 = (365-3)*(365-4)*...*(365-18)*(365-19)
+```
+ways to pick the birthdays.  So in total the number of choices is
+```
+n = m*n1*n2
+  = m*(365-0)*(365-1)*...*(365-18)*(365-19)
+  = ...
+```
+
+There are a total of
+```
+N = 365C23
+  =(365-0)*...*(365-22)
+```
+ways to pick birthdays with no restrictions.
+
+The probability is
+```
+n/N = m/[(365-20)(365-21)(365-22)]
+    ~= m/345^3
+    ~= m/350^3
+    ~= m/(35^3)*1000
+    ~= m/(35)*1225*1000
+    ~= m/4250*1000
+    ~= m/4,250,000
+    ~=
+```
